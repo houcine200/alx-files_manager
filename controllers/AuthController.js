@@ -16,10 +16,7 @@ class AuthController {
     }
     const token = uuidv4();
     await redisClient.set(`auth_${token}`, user._id.toString(), 60 * 60 * 24);
-    // const userIdFromRedis = await redisClient.get(`auth_${token}`);
-    // if (userIdFromRedis !== user._id.toString()) {
-    //   return res.status(500).json({ error: 'Failed to set token in Redis' });
-    // }
+  
     return res.status(200).json({ token });
   }
 
@@ -31,7 +28,7 @@ class AuthController {
     }
 
     await redisClient.del(`auth_${token}`);
-    return res.status(204).end(); // end will make ;à send empty body, 204 mean no content
+    return res.status(204).end();
   }
 }
 
