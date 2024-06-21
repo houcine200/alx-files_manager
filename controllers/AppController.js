@@ -1,17 +1,17 @@
-const redis = require('../utils/redis');
-const db = require('../utils/db');
+import redisClient from '../utils/redis';
+import dbClient from '../utils/db';
 
 class AppController {
   static getStatus(req, res) {
     res.status(200).json({
-      redis: redis.isAlive(),
-      db: db.isAlive(),
+      redis: redisClient.isAlive(),
+      db: dbClient.isAlive(),
     });
   }
 
   static async getStats(req, res) {
-    res.status(200).json({ users: await db.nbUsers(), files: await db.nbFiles() });
+    res.status(200).json({ users: await dbClient.nbUsers(), files: await dbClient.nbFiles() });
   }
 }
 
-module.exports = AppController;
+export default AppController;
